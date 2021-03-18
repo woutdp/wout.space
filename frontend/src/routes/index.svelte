@@ -31,7 +31,7 @@
 </section>
 <section class="section">
     <div class="container">
-        <h1>About Me</h1>
+        <h1>About</h1>
         <hr>
         <p>I'm a freelance web developer working fully remote. The sharpest tools in my toolbox are <code>Python (2, 3)</code>, <code>Django</code>, <code>Vue</code> & <code>Docker</code>.</p>
         <p>
