@@ -20,7 +20,18 @@
 
 <svelte:head>
     <title>Wout De Puysseleir</title>
-    <meta name="Description" content="Website of Wout De Puysseleir">
+    <meta name="title" content="Wout De Puysseleir">
+    <meta name="description" content="Personal website of Wout De Puysseleir">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wout.space/">
+    <meta property="og:title" content="Wout De Puysseleir">
+    <meta property="og:description" content="Personal website of Wout De Puysseleir">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://wout.space/">
+    <meta property="twitter:title" content="Wout De Puysseleir">
+    <meta property="twitter:description" content="Personal website of Wout De Puysseleir">
 </svelte:head>
 
 <section class="landing center full-page">

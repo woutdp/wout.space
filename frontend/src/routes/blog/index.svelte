@@ -1,33 +1,54 @@
 <script context="module">
     export function preload({ params, query }) {
         return this.fetch(`blog.json`).then(r => r.json()).then(posts => {
-            return { posts };
-        });
+            return { posts }
+        })
     }
 </script>
 
 <script>
-    export let posts;
+    export let posts
 </script>
 
 <style lang="stylus">
-    ul
-        margin: 0 0 1em 0
-        line-height: 1.5
+    .title
+        display flex
+        align-items center
+
+    .post-item-date
+        text-transform uppercase
 </style>
 
 <svelte:head>
-    <title>Blog</title>
+    <title>Blog - Wout De Puysseleir</title>
+
+    <meta name="title" content="Wout De Puysseleir">
+    <meta name="description" content="Personal blog of Wout De Puysseleir">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wout.space/blog">
+    <meta property="og:title" content="Blog - Wout De Puysseleir">
+    <meta property="og:description" content="Personal blog of Wout De Puysseleir">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://wout.space/blog">
+    <meta property="twitter:title" content="Blog - Wout De Puysseleir">
+    <meta property="twitter:description" content="Personal blog of Wout De Puysseleir">
 </svelte:head>
 
-<h1>Recent posts</h1>
-
-<ul>
-    {#each posts as post}
-        <!-- we're using the non-standard `rel=prefetch` attribute to
-                tell Sapper to load the data for the page as soon as
-                the user hovers over the link or taps it, instead of
-                waiting for the 'click' event -->
-        <li><a rel='prefetch' href='blog/{post.slug}'>{post.title}</a></li>
-    {/each}
-</ul>
+<section class="section">
+    <div class="container blog">
+        <h1>Blog</h1>
+        {#each posts as post, index}
+            <article>
+                <div class="title">
+                    <h2>
+                        <a sapper:prefetch href='blog/{post.slug}'>{post.title}</a>
+                    </h2>
+                    <span class="post-item-date"> — {post.printDate}</span>
+                </div>
+                <p>{post.excerpt}</p>
+            </article>
+        {/each}
+    </div>
+</section>
