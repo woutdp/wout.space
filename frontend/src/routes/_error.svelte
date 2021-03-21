@@ -25,7 +25,7 @@
 <section class="container center full-page">
     <h1>{status}</h1>
     <p>{error.message}</p>
-    <a href="/" rel="prefetch">Return to homepage</a>
+    <a href="/" sapper:prefetch>Return to homepage</a>
 </section>
 
 {#if dev && error.stack}

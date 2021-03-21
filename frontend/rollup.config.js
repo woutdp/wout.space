@@ -1,11 +1,15 @@
-import resolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
+import path from 'path';
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
+import url from '@rollup/plugin-url';
 import { terser } from 'rollup-plugin-terser';
+import glob from 'rollup-plugin-glob';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import markdown from './src/utils/markdown.js';
 
 import autoPreprocess from 'svelte-preprocess';
 import rupture from 'rupture';
@@ -20,8 +24,10 @@ const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
-const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
-const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
+const onwarn = (warning, onwarn) =>
+	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
+	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+	onwarn(warning);
 
 export default {
     client: {
@@ -29,21 +35,29 @@ export default {
         output: config.client.output(),
         plugins: [
             replace({
+                 preventAssignment: true,
                 'process.browser': true,
                 'process.env.NODE_ENV': JSON.stringify(mode)
             }),
             svelte({
                 preprocess,
-                dev,
-                hydratable: true,
-                emitCss: true
+                emitCss: true,
+                compilerOptions: {
+                    dev,
+                    hydratable: true,
+                }
             }),
+            url({
+				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
+				publicPath: '/client/'
+			}),
             resolve({
                 browser: true,
-                dedupe
+                dedupe: ['svelte']
             }),
             commonjs(),
-
+            markdown(),
+            glob(),
             legacy && babel({
                 extensions: ['.js', '.mjs', '.html', '.svelte'],
                 runtimeHelpers: true,
@@ -65,6 +79,7 @@ export default {
                 module: true
             })
         ],
+        preserveEntrySignatures: false,
 
         onwarn,
     },
@@ -74,23 +89,32 @@ export default {
         output: config.server.output(),
         plugins: [
             replace({
+                preventAssignment: true,
                 'process.browser': false,
                 'process.env.NODE_ENV': JSON.stringify(mode)
             }),
             svelte({
                 preprocess,
-                generate: 'ssr',
-                dev
+                compilerOptions: {
+                    dev,
+                    generate: 'ssr',
+                    hydratable: true
+                }
+            }),
+            url({
+                sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
+                publicPath: '/client/',
+                emitFiles: false // already emitted by client build
             }),
             resolve({
-                dedupe
+                dedupe: ['svelte']
             }),
-            commonjs()
+            commonjs(),
+            markdown(),
+            glob(),
         ],
-        external: Object.keys(pkg.dependencies).concat(
-            require('module').builtinModules || Object.keys(process.binding('natives'))
-        ),
-
+        external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
+        preserveEntrySignatures: 'strict',
         onwarn,
     },
 
@@ -100,13 +124,16 @@ export default {
         plugins: [
             resolve(),
             replace({
-                'process.browser': true,
-                'process.env.NODE_ENV': JSON.stringify(mode)
+                preventAssignment: true,
+                values: {
+                    'process.browser': true,
+                    'process.env.NODE_ENV': JSON.stringify(mode)
+                }
             }),
             commonjs(),
             !dev && terser()
         ],
-
+        preserveEntrySignatures: false,
         onwarn,
     }
 };
