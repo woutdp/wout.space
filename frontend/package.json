@@ -23,6 +23,8 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/runtime": "^7.0.0",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "autoprefixer": "^9.6.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.17",
@@ -36,6 +38,7 @@
     "sapper": "^0.27.16",
     "stylus": "*",
     "svelte": "*",
+    "svelte-fa": "^2.2.0",
     "svelte-preprocess": "*"
   }
 }

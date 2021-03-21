@@ -7,7 +7,7 @@ body
     height: 100%
     margin: 0
     font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif
-    font-size: 16px
+    font-size: 20px
     line-height: 1.5
     background-color: background
     color: foreground
@@ -16,10 +16,11 @@ body
         font-size: 14px;
 
 h1, h2, h3, h4, h5, h6
-    margin: 0 0 0.5em 0
-    font-weight: 400
-    line-height: 1.2
-    text-transform: capitalize
+    margin 0 0 0.5em 0
+    font-weight 400
+    line-height 1.2
+    text-transform capitalize
+    text-decoration-thickness 10%
 
 h1
     font-size: 2em
@@ -27,6 +28,7 @@ h1
 
 a
     color: cyan-bright
+    text-decoration-thickness 10%
 
 hr
     background-color: tint(background, 5%)
@@ -55,8 +57,21 @@ code
     padding: 20px
 
 .section
-    background-color: background
-    padding: 3rem 1.5rem
+    background-color background
+    padding 3rem 1.5rem
+
+    &.yellow
+        background-color yellow
+        color black
+        a
+            color lighten(yellow-bright, 20%)
+        .anchor
+            color: black
+        code
+            color black
+            background-color yellow-bright
+        hr
+            background-color yellow-bright
 
 .container
     margin: 0 auto
@@ -76,6 +91,13 @@ code
     +above(1400px)
         min-width: 1300px
         width: 1300px
+
+.text-align-center
+    text-align center
+
+.footnote
+    font-style italic
+    font-size 0.7em
 
 #sapper
     height: 100%
