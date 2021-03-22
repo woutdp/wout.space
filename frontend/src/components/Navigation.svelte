@@ -1,40 +1,22 @@
-<script>
-    export let segment
-</script>
-
 <style lang="stylus">
     nav
-        grid-area: nav
-        padding: 0 1em
-        margin: 20px
+        grid-area nav
+        padding 0 1em
+        margin 20px
 
     ul
-        display: flex
-        //justify-content: space-between
-        margin: 0
-        padding: 0
-        text-align: center
+        display flex
+        margin 0
+        padding 0
+        text-align center
 
     li
-        display: block
-
-    .selected
-        position: relative
-        display: inline-block
-
-    .selected::after
-        position: absolute
-        content: ''
-        width: calc(100% - 1em)
-        height: 2px
-        background-color: rgb(255,62,0)
-        display: block
-        bottom: -1px
+        display block
 
     a
-        text-decoration: none
-        padding: 1em 0.5em
-        display: block
+        text-decoration none
+        padding 1em 0.5em
+        display block
 </style>
 
 <nav>
