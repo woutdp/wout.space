@@ -13,35 +13,6 @@
     export let segment
 </script>
 
-<style lang="stylus">
-    @import '../../styles/variables.styl'
-
-    h2
-        font-weight 900
-
-    .date
-        text-transform uppercase
-        color grey
-        font-size 0.7em
-
-    p
-        margin 0
-
-    .tags
-        margin-top 5px
-
-        span
-            background-color blue-bright
-            border-radius 5px
-            color black
-            font-size 0.7em
-            font-weight 600
-            padding 3px 10px
-
-            &:not(:last-child)
-                margin-right 10px
-</style>
-
 <svelte:head>
     <title>Blog - Wout De Puysseleir</title>
 
@@ -84,3 +55,35 @@
         {/each}
     </div>
 </section>
+
+<style lang="stylus">
+    @import '../../styles/variables.styl'
+
+    h2
+        font-weight 900
+
+    .date
+        text-transform uppercase
+        color grey
+        font-size 0.7em
+
+    p
+        margin 0
+
+    .tags
+        margin-top 5px
+
+        span
+            background-color blue-bright
+            border-radius 5px
+            color black
+            font-size 0.7em
+            font-weight 600
+            padding 3px 10px
+
+            &:not(:last-child)
+                margin-right 10px
+
+    .section
+        padding 1em 1.5em
+</style>

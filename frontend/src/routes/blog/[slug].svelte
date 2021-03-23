@@ -22,28 +22,6 @@
     let noNewlineExcerpt = post.excerpt.replace(/(\r\n|\n|\r)/gm, " ").trim()
 </script>
 
-<style lang="stylus">
-    @import "../../styles/variables.styl"
-
-    max-width = 600px
-
-    header
-        text-align center
-        margin-bottom 3em
-        max-width max-width
-
-        h1
-            margin-bottom 0.2em
-            font-weight 900
-
-        p
-            color grey
-            font-weight 600
-            font-size 0.9em
-            font-style italic
-            margin 0
-</style>
-
 <svelte:head>
     <title>{post.title}</title>
     <link rel="canonical" href="{url}" />
@@ -87,3 +65,31 @@
         {/if}
     </div>
 </section>
+
+<style lang="stylus">
+    @import "../../styles/variables.styl"
+
+    max-width = 600px
+
+    header
+        text-align center
+        margin-bottom 1em
+        max-width max-width
+
+        +above(700px)
+            margin-bottom 2em
+
+        h1
+            margin-bottom 0.2em
+            font-weight 900
+
+        p
+            color grey
+            font-weight 600
+            font-size 0.9em
+            font-style italic
+            margin 0
+
+    .section
+        padding 1em 1.5em
+</style>

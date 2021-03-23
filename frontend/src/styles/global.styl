@@ -53,7 +53,14 @@ hr
 
 .section
     background-color background
-    padding 3rem 1.5rem
+    padding 2em 1.5em
+    +above(700px)
+        padding 3rem 1.5rem
+
+    hr
+        margin 1rem 0
+        +above(700px)
+            margin 1.5rem 0
 
     &.yellow
         background-color yellow
