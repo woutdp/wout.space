@@ -4,11 +4,9 @@ date: "2021-03-22T00:00:00.000Z"
 tags:
     - git
     - workflow
+excerpt: >
+  How to 'stash' your files on a branch.
 ---
-How to 'stash' your files on a branch.
-
-<!-- more -->
-
 Sometimes I'm working on a branch and I won't finish what I'm working on for some reason.
 Maybe there's a more urgent thing that needs to be done, or I'm just messing around and looking at different
 ways to solve a problem, and I want to abandon this and work on something else.

@@ -3,11 +3,8 @@ title: A better git log
 date: "2021-03-22T00:00:00.000Z"
 tags:
     - git
+excerpt: A more readable and concise way to display the git log.
 ---
-A more readable and concise way to display the git log.
-
-<!-- more -->
-
 The default `git log` is usually too verbose and long for my workflow.
 In most situations I just want to see the latest 10 commits with each commit on one line of output.
 

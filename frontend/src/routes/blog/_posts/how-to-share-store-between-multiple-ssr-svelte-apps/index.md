@@ -5,18 +5,14 @@ tags:
     - svelte
     - store
     - ssr
+excerpt: Taking a look into how to share a store between 2 Svelte apps when they're server-side rendered.
 ---
-
-Taking a look into how to share a store between 2 Svelte apps when they're server-side rendered.
-
-<!-- more -->
-
 By default, when you have 2 Svelte apps that are server-side rendered, they won't share a store.
 So let's take a look into how to solve this.
 
 Basket example:
 
-```svelte
+```javascript
 <!--Basket.Svelte-->
 
 <script>
@@ -29,7 +25,7 @@ Basket example:
 {/if}
 ```
 
-```svelte
+```javascript
 <!--BasketButton.Svelte-->
 
 <script>

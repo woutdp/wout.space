@@ -1,21 +1,32 @@
-import path from 'path'
-import resolve from '@rollup/plugin-node-resolve'
-import replace from '@rollup/plugin-replace'
-import commonjs from '@rollup/plugin-commonjs'
-import svelte from 'rollup-plugin-svelte'
+import pkg from './package.json'
+import autoPreprocess from 'svelte-preprocess'
 import babel from '@rollup/plugin-babel'
+import commonjs from '@rollup/plugin-commonjs'
+import config from 'sapper/config/rollup.js'
+import copy from 'rollup-plugin-copy'
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars'
+import path from 'path'
+import replace from '@rollup/plugin-replace'
+import resolve from '@rollup/plugin-node-resolve'
+import rupture from 'rupture'
+import svelte from 'rollup-plugin-svelte'
 import url from '@rollup/plugin-url'
 import { terser } from 'rollup-plugin-terser'
-import glob from 'rollup-plugin-glob'
-import config from 'sapper/config/rollup.js'
-import pkg from './package.json'
-import markdown from './src/utils/markdown.js'
-import {mdsvex} from 'mdsvex'
+import { mdsvex } from 'mdsvex'
 
-import autoPreprocess from 'svelte-preprocess'
-import rupture from 'rupture'
-
-const preprocess = [autoPreprocess({stylus: {use: rupture()}}), mdsvex()]
+const preprocess = [
+    autoPreprocess({
+        stylus: {
+            use: rupture()
+        }
+    }),
+    mdsvex({
+		extension: '.md',
+		layout: {
+			blog: 'src/layouts/blog.svelte'
+		},
+	})
+]
 
 const mode = process.env.NODE_ENV
 const dev = mode === 'development'
@@ -26,7 +37,8 @@ const onwarn = (warning, onwarn) =>
 	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
 	onwarn(warning)
 
-const extensions = ['.svelte', '.svx']
+const dynamicImportVarsOptions = {include: [ `src/routes/**/*.svelte` ]}
+const extensions = ['.svelte', '.md']
 export default {
     client: {
         input: config.client.input(),
@@ -55,8 +67,12 @@ export default {
                 dedupe: ['svelte']
             }),
             commonjs(),
-            markdown(),
-            glob(),
+            dynamicImportVars(dynamicImportVarsOptions),
+            copy({
+				targets: [
+					{ src: 'src/**/images/*.*', dest: 'static/images' }
+				]
+			}),
             legacy && babel({
                 extensions: ['.js', '.mjs', '.html', ...extensions],
                 runtimeHelpers: true,
@@ -110,11 +126,16 @@ export default {
                 dedupe: ['svelte']
             }),
             commonjs(),
-            markdown(),
-            glob(),
+            dynamicImportVars(dynamicImportVarsOptions),
+            copy({
+				targets: [
+					{ src: 'src/**/_images/*.*', dest: 'static/images' }
+				]
+			})
         ],
         external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
         preserveEntrySignatures: 'strict',
+
         onwarn,
     },
 };
